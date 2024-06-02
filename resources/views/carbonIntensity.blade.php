@@ -9,6 +9,30 @@
                 <div class="card-header text-center">Visualiser l'intensité carbone</div>
                 <div class="card-body">
                     <form class="row g-3">
+                            <div class="col-md-4">
+                                <label for="location" class="form-label">Lieu</label>
+                                <select id="location" class="form-select">
+                                    @foreach($locations as $location)
+                                        <option value="{{ $location->id }}">{{ $location->NameLocation }}, {{ $location->Country }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="frequency" class="form-label">Fréquences</label>
+                                <select id="frequency" class="form-select">
+                                    <option selected>toutes les heures</option>
+                                    <!-- Ajouter d'autres options ici -->
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="displayPeriod" class="form-label">Période d'affichage</label>
+                                <select id="displayPeriod" class="form-select">
+                                    <option selected>7j</option>
+                                    <!-- Ajouter d'autres options ici -->
+                                </select>
+                            </div>
+                        </form>
+                    <form class="row g-3">
                         <!-- Vos champs de formulaire -->
                     </form>
                     <div class="mt-4">
@@ -53,7 +77,8 @@
 </div>
 
 <!-- Code de l'alerte -->
-<div id="customAlert" class="custom-alert" style="display: none;">
+<div id="customAlert" class="custom-alert">
+    <!-- Contenu de l'alerte -->
     <h4 class="alert-title">Dépassement seuil carbone !</h4>
     <p class="alert-info">Avec la valeur <span id="alertValue"></span> / Avec le seuil de dépassement à <span id="thresholdValue"></span> / A <span id="alertTime"></span></p>
     <button id="closeAlertBtn" class="close-alert-btn">Fermer</button>

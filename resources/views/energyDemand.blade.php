@@ -12,9 +12,10 @@
                         <div class="col-md-4">
                             <label for="location" class="form-label">Lieu</label>
                             <select id="location" class="form-select">
-                                <option selected>Amiens</option>
-                                <!-- Ajouter d'autres options ici -->
-                            </select>
+                                    @foreach($locations as $location)
+                                        <option value="{{ $location->id }}">{{ $location->NameLocation }}, {{ $location->Country }}</option>
+                                    @endforeach
+                                </select>
                         </div>
                         <div class="col-md-4">
                             <label for="frequency" class="form-label">Fréquences</label>

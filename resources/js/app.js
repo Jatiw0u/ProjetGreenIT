@@ -58,10 +58,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+
 document.addEventListener('DOMContentLoaded', function() {
     const customAlert = document.getElementById('customAlert');
-    customAlert.style.display = 'block'; // Afficher l'alerte
+    const closeAlertBtn = document.getElementById('closeAlertBtn');
+
+    // Afficher l'alerte dès le chargement de la page
+    customAlert.style.display = 'block';
+
+    // Fonction pour masquer l'alerte
+    function hideAlert() {
+        customAlert.style.display = 'none';
+    }
+
+    // Ajouter un gestionnaire d'événement au bouton de fermeture
+    closeAlertBtn.addEventListener('click', hideAlert);
 });
+
+
 
 
 
