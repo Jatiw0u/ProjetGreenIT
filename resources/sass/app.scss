@@ -67,17 +67,26 @@ button.btn-secondary:hover {
 }
 
 .custom-alert {
+    display: none; /* Masqué par défaut */
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #ff6347; /* Fond rouge */
-    color: #000; /* Texte noir */
+    background-color: red;
+    color: black;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    border-radius: 10px;
+    z-index: 1050;
     text-align: center;
+}
+
+.custom-alert .close-alert-btn {
+    margin-top: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
 

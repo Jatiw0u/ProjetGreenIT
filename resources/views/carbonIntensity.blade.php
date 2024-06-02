@@ -59,6 +59,14 @@
             <div class="modal-body">
                 <form id="alertForm">
                     <div class="mb-3">
+                        <label for="location" class="form-label">Lieu</label>
+                        <select id="location" class="form-select">
+                            @foreach($locations as $location)
+                                <option value="{{ $location->id }}">{{ $location->NameLocation }}, {{ $location->Country }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="carbonThreshold" class="form-label">Seuil d'intensité carbone</label>
                         <div class="input-group">
                             <input type="number" class="form-control" id="carbonThreshold" name="carbonThreshold" min="0" step="0.01" required>
@@ -76,11 +84,18 @@
     </div>
 </div>
 
+
 <!-- Code de l'alerte -->
 <div id="customAlert" class="custom-alert">
     <!-- Contenu de l'alerte -->
     <h4 class="alert-title">Dépassement seuil carbone !</h4>
-    <p class="alert-info">Avec la valeur <span id="alertValue"></span> / Avec le seuil de dépassement à <span id="thresholdValue"></span> / A <span id="alertTime"></span></p>
+    <p class="alert-info">
+        <span id="alertLocation">Lieu: Paris, France</span> / 
+        Avec la valeur <span id="alertValue">5.5</span> gCO2 / 
+        Avec le seuil de dépassement à <span id="thresholdValue">5</span> gCO2 / 
+        A <span id="alertTime">18h02 et 42 secondes</span>
+    </p>
     <button id="closeAlertBtn" class="close-alert-btn">Fermer</button>
 </div>
+
 @endsection
