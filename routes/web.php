@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ApiController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,3 +34,11 @@ Route::post('/save-alert-settings', function (Request $request) {
     // Enregistrer ces valeurs dans la base de données ou prendre les actions appropriées
     return response()->json(['success' => true]);
 });
+
+//Requête API
+
+Route::get('/List_Location', [ApiController::class, 'List_City'] );
+
+Route::get('/carbone-intensities/{id}', [ApiController::class, 'List_CarboneIntensitiesLocation']);
+
+Route::get('/electrical-demands/{id}', [ApiController::class, 'List_ElectricalDemandLocation']);
