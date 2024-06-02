@@ -14,5 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('intensity');
+});
+
+Route::get('/intensity', function () {
+    return view('carbonIntensity');
+})->name('intensity');
+
+Route::get('/energy-demand', function () {
+    return view('energyDemand');
+})->name('energy-demand');
+
+Route::post('/save-alert-settings', function (Request $request) {
+    // Sauvegarder les paramètres d'alerte ici
+    $threshold = $request->input('carbonThreshold');
+    $notificationMethod = $request->input('notificationMethod');
+    // Enregistrer ces valeurs dans la base de données ou prendre les actions appropriées
+    return response()->json(['success' => true]);
 });

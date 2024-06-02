@@ -7,7 +7,12 @@
     },
     "devDependencies": {
         "axios": "^1.6.4",
-        "laravel-vite-plugin": "^1.0.0",
+        "bootstrap": "^5.3.3",
+        "laravel-vite-plugin": "^1.0.4",
+        "sass": "^1.77.4",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "chart.js": "^4.4.3"
     }
 }
