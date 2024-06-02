@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LocationController;
 
 use App\Http\Controllers\ApiController;
 
@@ -23,9 +24,14 @@ Route::get('/intensity', function () {
     return view('carbonIntensity');
 })->name('intensity');
 
+Route::get('/intensity', [LocationController::class, 'create'])->name('intensity');
+
+
 Route::get('/energy-demand', function () {
     return view('energyDemand');
 })->name('energy-demand');
+
+Route::get('/energy-demand', [LocationController::class, 'create'])->name('energy-demand');
 
 Route::post('/save-alert-settings', function (Request $request) {
     // Sauvegarder les paramètres d'alerte ici

@@ -1,9 +1,10 @@
-import './bootstrap';
-import 'bootstrap';
-
+import '../sass/app.scss';
+import { Modal } from 'bootstrap'
 
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('exampleChart').getContext('2d');
@@ -47,7 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function () {
     const openModalBtn = document.getElementById('openModalBtn');
-    const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
+    //const alertModal = new Bootstrap.Modal(document.getElementById('alertModal'));
+    const alertModal = new Modal(document.getElementById("alertModal"));
 
     if (openModalBtn) {
         openModalBtn.addEventListener('click', function () {
@@ -55,6 +57,26 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const customAlert = document.getElementById('customAlert');
+    const closeAlertBtn = document.getElementById('closeAlertBtn');
+
+    // Afficher l'alerte dès le chargement de la page
+    customAlert.style.display = 'block';
+
+    // Fonction pour masquer l'alerte
+    function hideAlert() {
+        customAlert.style.display = 'none';
+    }
+
+    // Ajouter un gestionnaire d'événement au bouton de fermeture
+    closeAlertBtn.addEventListener('click', hideAlert);
+});
+
+
+
 
 
 
