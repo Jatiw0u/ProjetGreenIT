@@ -51,4 +51,11 @@
         </div>
     </div>
 </div>
+
+<!-- Code de l'alerte -->
+<div id="customAlert" class="custom-alert" style="display: none;">
+    <h4 class="alert-title">Dépassement seuil carbone !</h4>
+    <p class="alert-info">Avec la valeur <span id="alertValue"></span> / Avec le seuil de dépassement à <span id="thresholdValue"></span> / A <span id="alertTime"></span></p>
+    <button id="closeAlertBtn" class="close-alert-btn">Fermer</button>
+</div>
 @endsection

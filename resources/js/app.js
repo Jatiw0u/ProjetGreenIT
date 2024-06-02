@@ -58,5 +58,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const customAlert = document.getElementById('customAlert');
+    customAlert.style.display = 'block'; // Afficher l'alerte
+});
+
+
 
 
