@@ -26,6 +26,29 @@
 
 <!-- Modal -->
 <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
-    <!-- Contenu du modal -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alertModalLabel">Paramétrage des alertes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="alertForm">
+                    <div class="mb-3">
+                        <label for="carbonThreshold" class="form-label">Seuil d'intensité carbone</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="carbonThreshold" name="carbonThreshold" min="0" step="0.01" required>
+                            <span class="input-group-text">gCO2</span>
+                        </div>
+                    </div>
+                    <!-- Ajouter d'autres champs de paramétrage ici si nécessaire -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="submit" form="alertForm" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
