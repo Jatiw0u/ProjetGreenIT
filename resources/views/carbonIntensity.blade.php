@@ -9,31 +9,28 @@
                 <div class="card-header text-center">Visualiser l'intensité carbone</div>
                 <div class="card-body">
                     <form class="row g-3">
-                            <div class="col-md-4">
-                                <label for="location" class="form-label">Lieu</label>
-                                <select id="location" class="form-select">
-                                    @foreach($locations as $location)
-                                        <option value="{{ $location->id }}">{{ $location->NameLocation }}, {{ $location->Country }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="frequency" class="form-label">Fréquences</label>
-                                <select id="frequency" class="form-select">
-                                    <option selected>toutes les heures</option>
-                                    <!-- Ajouter d'autres options ici -->
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="displayPeriod" class="form-label">Période d'affichage</label>
-                                <select id="displayPeriod" class="form-select">
-                                    <option selected>7j</option>
-                                    <!-- Ajouter d'autres options ici -->
-                                </select>
-                            </div>
-                        </form>
-                    <form class="row g-3">
-                        <!-- Vos champs de formulaire -->
+                        <div class="col-md-4">
+                            <label for="location" class="form-label">Lieu</label>
+                            <select id="location" class="form-select">
+                                @foreach($locations as $location)
+                                    <option value="{{ $location->IdLocation }}">{{ $location->NameLocation }}, {{ $location->Country }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="frequency" class="form-label">Fréquences</label>
+                            <select id="frequency" class="form-select">
+                                <option value="hourly" selected>Toutes les heures</option>
+                                <!-- Ajouter d'autres options ici -->
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="displayPeriod" class="form-label">Période d'affichage</label>
+                            <select id="displayPeriod" class="form-select">
+                                <option value="7d" selected>7 jours</option>
+                                <!-- Ajouter d'autres options ici -->
+                            </select>
+                        </div>
                     </form>
                     <div class="mt-4">
                         <h5 class="text-center">Exemple de graphique</h5>
@@ -59,10 +56,10 @@
             <div class="modal-body">
                 <form id="alertForm">
                     <div class="mb-3">
-                        <label for="location" class="form-label">Lieu</label>
-                        <select id="location" class="form-select">
+                        <label for="locationAlert" class="form-label">Lieu</label>
+                        <select id="locationAlert" class="form-select">
                             @foreach($locations as $location)
-                                <option value="{{ $location->id }}">{{ $location->NameLocation }}, {{ $location->Country }}</option>
+                                <option value="{{ $location->IdLocation }}">{{ $location->NameLocation }}, {{ $location->Country }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -84,7 +81,6 @@
     </div>
 </div>
 
-
 <!-- Code de l'alerte -->
 <div id="customAlert" class="custom-alert">
     <!-- Contenu de l'alerte -->
@@ -97,5 +93,4 @@
     </p>
     <button id="closeAlertBtn" class="close-alert-btn">Fermer</button>
 </div>
-
 @endsection

@@ -24,6 +24,4 @@ class carbone_intensity extends Model
     {
         return $this->belongsTo(Location::class, 'IdLocation', 'IdLocation');
     }
-
-
 }

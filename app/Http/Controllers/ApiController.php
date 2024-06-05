@@ -50,5 +50,4 @@ class ApiController extends Controller
         // Retourner les données en format JSON
         return response()->json(['electrical_demands' => $demands]);
     }
-
 }
