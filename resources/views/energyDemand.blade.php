@@ -12,10 +12,10 @@
                         <div class="col-md-4">
                             <label for="location" class="form-label">Lieu</label>
                             <select id="location" class="form-select">
-                                    @foreach($locations as $location)
-                                        <option value="{{ $location->id }}">{{ $location->NameLocation }}, {{ $location->Country }}</option>
-                                    @endforeach
-                                </select>
+                                @foreach($locations as $location)
+                                    <option value="{{ $location->id }}">{{ $location->NameLocation }}, {{ $location->Country }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-md-4">
                             <label for="frequency" class="form-label">Fréquences</label>
@@ -34,7 +34,7 @@
                     </form>
                     <div class="mt-4">
                         <h5 class="text-center">Exemple de graphique</h5>
-                        <canvas id="exampleChart"></canvas>
+                        <canvas id="energyDemandChart"></canvas>
                     </div>
                 </div>
             </div>

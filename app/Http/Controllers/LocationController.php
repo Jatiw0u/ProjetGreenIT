@@ -9,6 +9,13 @@ class LocationController extends Controller
     public function create()
     {
         $locations = Location::all(); // Récupérer toutes les villes depuis la base de données
-        return view('carbonIntensity', compact('locations'));
+
+        if (request()->routeIs('intensity')) {
+            return view('carbonIntensity', compact('locations'));
+        }
+
+        if (request()->routeIs('energy-demand')) {
+            return view('energyDemand', compact('locations'));
+        }
     }
 }

@@ -34,7 +34,7 @@
                     </form>
                     <div class="mt-4">
                         <h5 class="text-center">Exemple de graphique</h5>
-                        <canvas id="exampleChart"></canvas>
+                        <canvas id="carbonIntensityChart"></canvas>
                     </div>
                     <div class="text-center mt-4">
                         <button type="button" class="btn btn-secondary" id="openModalBtn">Paramétrage des alertes</button>
