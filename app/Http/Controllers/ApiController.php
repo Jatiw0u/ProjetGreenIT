@@ -50,4 +50,17 @@ class ApiController extends Controller
         // Retourner les données en format JSON
         return response()->json(['electrical_demands' => $demands]);
     }
+
+    public function updateCarbonIntensityData()
+    {
+        $message = carbone_intensity::updateCarbonIntensityData();
+        return response()->json(['message' => $message]);
+    }
+
+    public function updateElectricityDemandData()
+    {
+        $message = Electrical_Demand::updateElectricityDemandData();
+        return response()->json(['message' => $message]);
+    }
+
 }

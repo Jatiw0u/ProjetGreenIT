@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use App\Jobs\FetchElectricityDemandData;
 
 class Electrical_Demand extends Model
 {
@@ -34,6 +36,18 @@ class Electrical_Demand extends Model
     public function location()
     {
         return $this->belongsTo(Location::class, 'Id_Location', 'IdLocation');
+    }
+
+    public static function updateElectricityDemandData()
+    {
+        $row_count = DB::table('electrical_demand')->count();
+        $locations = DB::table('location')->get();
+
+        foreach ($locations as $location) {
+            FetchElectricityDemandData::dispatch($location)->delay(now()->addSeconds(1));
+        }
+
+        return 'Données de demande électrique mises à jour avec succès.';
     }
     
 }

@@ -35,4 +35,6 @@ Route::post('/save-alert-settings', function (Request $request) {
 Route::get('/api/List_Location', [ApiController::class, 'List_City']);
 Route::get('/api/carbone-intensities/{id}', [ApiController::class, 'List_CarboneIntensitiesLocation']);
 Route::get('/api/electrical-demands/{id}', [ApiController::class, 'List_ElectricalDemandLocation']);
+Route::get('/api/update-carbon-intensity', [ApiController::class, 'updateCarbonIntensityData']);
+Route::get('/api/update-electricity-demand', [ApiController::class, 'updateElectricityDemandData']);
 
