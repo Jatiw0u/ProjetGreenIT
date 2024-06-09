@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateChart();  // Initial call to display data on load
 
     const openModalBtn = document.getElementById('openModalBtn');
-    const alertModal = new bootstrap.Modal(document.getElementById("alertModal"));
+    const alertModal = new Modal(document.getElementById("alertModal"));
 
     if (openModalBtn) {
         openModalBtn.addEventListener('click', function () {
