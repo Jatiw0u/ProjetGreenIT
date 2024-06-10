@@ -13,7 +13,6 @@
                             <label for="location" class="form-label">Lieu</label>
                             <select id="location" class="form-select">
                                 @foreach($locations as $location)
-                                    <!--<option value="{{ $location->IdLocation }}">{{ $location->NameLocation }}, {{ $location->Country }}</option>-->
                                     <option value="{{ $location->IdLocation }}" {{ $location->IdLocation == 151121 ? 'selected' : '' }}>
                                         {{ $location->NameLocation }}, {{ $location->Country }}
                                     </option>

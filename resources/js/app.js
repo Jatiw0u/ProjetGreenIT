@@ -15,54 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('carbonCtx:', carbonCtx);
     console.log('energyCtx:', energyCtx);
 
-    /*const updateCarbonIntensityChart = async () => {
-        
-        if (!carbonCtx) {
-            console.warn('carbonCtx is not defined');
-            return;
-        }
-        const locationId = document.getElementById('location').value;
-        console.log('Fetching carbone intensities for location:', locationId);
-        try {
-            const response = await fetch(`/ProjetGreenIT/public/api/carbone-intensities/${locationId}`);
-            if (!response.ok) {
-                console.error('Failed to fetch data');
-                return;
-            }
-            const data = await response.json();
-            console.log('Carbone intensities data:', data);
-            const labels = data.carbone_intensities.map(intensity => intensity.DateTimeIntensity);
-            const values = data.carbone_intensities.map(intensity => intensity.value);
-
-            if (carbonChart) {
-                carbonChart.destroy(); // Détruire l'ancienne instance du graphique si elle existe
-            }
-
-            carbonChart = new Chart(carbonCtx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Intensité carbone',
-                        data: values,
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        } catch (error) {
-            console.error('Error fetching carbone intensities:', error);
-        }
-    };*/
-
     const updateCarbonIntensityChart = async () => {
         if (!carbonCtx) {
             console.warn('carbonCtx is not defined');
@@ -117,10 +69,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Calcul du seuil
             const threshold = settingData[0].Number_Setting;
             const exceedance = values.find(value => value > threshold);
-            console.log(settingData[0].Number_Setting)
+            const locationName = document.querySelector(`#location option[value="${locationId}"]`).textContent;
+
+            console.log(threshold)
     
             if (exceedance) {
-                document.getElementById('alertLocation').textContent = `Lieu: ${locationId}`;
+                document.getElementById('alertLocation').textContent = `Lieu: ${locationName}`;
                 document.getElementById('alertValue').textContent = exceedance;
                 document.getElementById('thresholdValue').textContent = threshold;
                 document.getElementById('alertTime').textContent = new Date().toLocaleTimeString();
@@ -140,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const locationId = document.getElementById('location').value;
         console.log('Fetching energy demands for location:', locationId);
         try {
-            const response = await fetch(`/ProjetGreenIT/public/api/electrical-demands/121297`);
+            const response = await fetch(`/ProjetGreenIT/public/api/electrical-demands/${locationId}`);
             if (!response.ok) {
                 console.error('Failed to fetch data');
                 return;
@@ -270,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeAlertBtn = document.getElementById('closeAlertBtn');
 
     if (customAlert && closeAlertBtn) {
-        customAlert.style.display = 'block';
         closeAlertBtn.addEventListener('click', () => {
             customAlert.style.display = 'none';
         });
