@@ -3,6 +3,9 @@ import { Modal } from 'bootstrap';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
+let carbonChart = null;
+let energyChart = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded and parsed');
 
@@ -13,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('energyCtx:', energyCtx);
 
     const updateCarbonIntensityChart = async () => {
+        
         if (!carbonCtx) {
             console.warn('carbonCtx is not defined');
             return;
@@ -30,7 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const labels = data.carbone_intensities.map(intensity => intensity.DateTimeIntensity);
             const values = data.carbone_intensities.map(intensity => intensity.value);
 
-            new Chart(carbonCtx, {
+            if (carbonChart) {
+                carbonChart.destroy(); // Détruire l'ancienne instance du graphique si elle existe
+            }
+
+            carbonChart = new Chart(carbonCtx, {
                 type: 'line',
                 data: {
                     labels: labels,
@@ -128,7 +136,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             ];
 
-            new Chart(energyCtx, {
+            if (energyChart) {
+                energyChart.destroy(); // Détruire l'ancienne instance du graphique si elle existe
+            }
+
+            energyChart = new Chart(energyCtx, {
                 type: 'bar',
                 data: {
                     labels: labels,
