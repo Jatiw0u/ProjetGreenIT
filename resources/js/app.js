@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('carbonCtx:', carbonCtx);
     console.log('energyCtx:', energyCtx);
 
-    const updateCarbonIntensityChart = async () => {
+    /*const updateCarbonIntensityChart = async () => {
         
         if (!carbonCtx) {
             console.warn('carbonCtx is not defined');
@@ -60,6 +60,75 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         } catch (error) {
             console.error('Error fetching carbone intensities:', error);
+        }
+    };*/
+
+    const updateCarbonIntensityChart = async () => {
+        if (!carbonCtx) {
+            console.warn('carbonCtx is not defined');
+            return;
+        }
+    
+        const locationId = document.getElementById('location').value;
+        console.log('Fetching carbone intensities for location:', locationId);
+    
+        try {
+            const response = await fetch(`/ProjetGreenIT/public/api/carbone-intensities/${locationId}`);
+            if (!response.ok) {
+                console.error('Failed to fetch carbone intensities data');
+                return;
+            }
+            const data = await response.json();
+            console.log('Carbone intensities data:', data);
+            const labels = data.carbone_intensities.map(intensity => intensity.DateTimeIntensity);
+            const values = data.carbone_intensities.map(intensity => intensity.value);
+    
+            if (carbonChart) {
+                carbonChart.destroy();
+            }
+    
+            carbonChart = new Chart(carbonCtx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Intensité carbone',
+                        data: values,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+    
+            // Récupération variable paramètre
+            const settingData = await getSettingByLocation(locationId);
+            if (!settingData) {
+                return;
+            }
+    
+            // Calcul du seuil
+            const threshold = settingData[0].Number_Setting;
+            const exceedance = values.find(value => value > threshold);
+            console.log(settingData[0].Number_Setting)
+    
+            if (exceedance) {
+                document.getElementById('alertLocation').textContent = `Lieu: ${locationId}`;
+                document.getElementById('alertValue').textContent = exceedance;
+                document.getElementById('thresholdValue').textContent = threshold;
+                document.getElementById('alertTime').textContent = new Date().toLocaleTimeString();
+                document.getElementById('customAlert').style.display = 'block';
+            }
+    
+        } catch (error) {
+            console.error('Error fetching data:', error);
         }
     };
 
@@ -156,6 +225,20 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         } catch (error) {
             console.error('Error fetching energy demands:', error);
+        }
+    };
+
+    const getSettingByLocation = async (locationId) => {
+        try {
+            const response = await fetch(`api/parametres/${locationId}`);
+            if (!response.ok) {
+                console.warn('No settings found for this location.');
+                return null;
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching setting:', error);
+            return null;
         }
     };
 
