@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const values = data.carbone_intensities.map(intensity => intensity.value);
 
             new Chart(carbonCtx, {
-                type: 'line',
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
