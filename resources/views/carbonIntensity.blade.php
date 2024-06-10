@@ -78,7 +78,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="submit" form="alertForm" class="btn btn-primary">Enregistrer</button>
+                <button type="submit" form="alertForm" id="saveAlertSettingsBtn" class="btn btn-primary">Enregistrer</button>
             </div>
         </div>
     </div>

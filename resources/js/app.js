@@ -194,4 +194,39 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.warn('customAlert or closeAlertBtn is not defined');
     }
+
+// Ajouter le gestionnaire de soumission du formulaire
+const alertForm = document.getElementById('alertForm');
+const saveAlertSettingsBtn = document.getElementById('saveAlertSettingsBtn');
+
+if (alertForm && saveAlertSettingsBtn) {
+    saveAlertSettingsBtn.addEventListener('click', async (event) => {
+        event.preventDefault();
+
+        const locationAlert = document.getElementById('locationAlert').value;
+        const carbonThreshold = document.getElementById('carbonThreshold').value;
+
+        try {
+            const response = await fetch(`/ProjetGreenIT/public/api/parametres/${carbonThreshold}/${locationAlert}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Settings updated successfully:', result);
+                // Optionally close the modal here
+                alertModal.hide();
+            } else {
+                console.error('Failed to update settings:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error updating settings:', error);
+        }
+    });
+}
+
 });

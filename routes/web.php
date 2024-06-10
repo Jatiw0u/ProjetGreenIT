@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +38,6 @@ Route::get('/api/carbone-intensities/{id}', [ApiController::class, 'List_Carbone
 Route::get('/api/electrical-demands/{id}', [ApiController::class, 'List_ElectricalDemandLocation']);
 Route::get('/api/update-carbon-intensity', [ApiController::class, 'updateCarbonIntensityData']);
 Route::get('/api/update-electricity-demand', [ApiController::class, 'updateElectricityDemandData']);
+Route::get('/api/parametres/{idLocation}', [SettingController::class, 'getSettingsByLocation']);
+Route::post('/api/parametres/{value}/{idLocation}', [SettingController::class, 'updateSettingByLocation']);
 
