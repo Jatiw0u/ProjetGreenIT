@@ -69,15 +69,19 @@ document.addEventListener('DOMContentLoaded', function() {
             // Calcul du seuil
             const threshold = settingData[0].Number_Setting;
             const exceedance = values.find(value => value > threshold);
+            const exceedanceIndex = values.findIndex(value => value > threshold);
             const locationName = document.querySelector(`#location option[value="${locationId}"]`).textContent;
 
             console.log(threshold)
     
             if (exceedance) {
+
+                const dateAlert = labels[exceedanceIndex];
+
                 document.getElementById('alertLocation').textContent = `Lieu: ${locationName}`;
                 document.getElementById('alertValue').textContent = exceedance;
                 document.getElementById('thresholdValue').textContent = threshold;
-                document.getElementById('alertTime').textContent = new Date().toLocaleTimeString();
+                document.getElementById('alertTime').textContent = dateAlert;
                 document.getElementById('customAlert').style.display = 'block';
             }
     
