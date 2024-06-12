@@ -9,12 +9,14 @@ let energyChart = null;
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded and parsed');
 
+    // Obtenir le contexte des éléments canvas pour les graphiques
     const carbonCtx = document.getElementById('carbonIntensityChart')?.getContext('2d');
     const energyCtx = document.getElementById('energyDemandChart')?.getContext('2d');
 
     console.log('carbonCtx:', carbonCtx);
     console.log('energyCtx:', energyCtx);
 
+    // Fonction pour mettre à jour le graphique de l'intensité carbone
     const updateCarbonIntensityChart = async () => {
         if (!carbonCtx) {
             console.warn('carbonCtx is not defined');
@@ -35,16 +37,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const labels = data.carbone_intensities.map(intensity => intensity.DateTimeIntensity);
             const values = data.carbone_intensities.map(intensity => intensity.value);
     
+            // Détruire l'ancien graphique s'il existe
             if (carbonChart) {
                 carbonChart.destroy();
             }
     
+            // Créer un nouveau graphique
             carbonChart = new Chart(carbonCtx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Intensité carbone',
+                        label: 'Intensité carbone (gCO2)',
                         data: values,
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
@@ -54,13 +58,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 options: {
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'gCO2'
+                            }
                         }
                     }
                 }
             });
     
-            // Récupération variable paramètre
+            // Récupération des paramètres de seuil pour le lieu sélectionné
             const settingData = await getSettingByLocation(locationId);
             if (!settingData) {
                 return;
@@ -74,8 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log(threshold)
     
+            // Afficher une alerte si le seuil est dépassé
             if (exceedance) {
-
                 const dateAlert = labels[exceedanceIndex];
 
                 document.getElementById('alertLocation').textContent = `Lieu: ${locationName}`;
@@ -90,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // Fonction pour mettre à jour le graphique de la demande énergétique
     const updateEnergyDemandChart = async () => {
         if (!energyCtx) {
             console.warn('energyCtx is not defined');
@@ -108,65 +117,67 @@ document.addEventListener('DOMContentLoaded', function() {
             const labels = data.electrical_demands.map(demand => demand.DateTimeDemand);
             const datasets = [
                 {
-                    label: 'Nucléaire',
+                    label: 'Nucléaire (MW)',
                     data: data.electrical_demands.map(demand => demand.ValueNuclear),
                     borderColor: 'rgba(255, 99, 132, 1)',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)'
                 },
                 {
-                    label: 'Géothermie',
+                    label: 'Géothermie (MW)',
                     data: data.electrical_demands.map(demand => demand.ValueGeothermal),
                     borderColor: 'rgba(54, 162, 235, 1)',
                     backgroundColor: 'rgba(54, 162, 235, 0.2)'
                 },
                 {
-                    label: 'Biomasse',
+                    label: 'Biomasse (MW)',
                     data: data.electrical_demands.map(demand => demand.ValueBiomass),
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)'
                 },
                 {
-                    label: 'Charbon',
+                    label: 'Charbon (MW)',
                     data: data.electrical_demands.map(demand => demand.ValueCoal),
                     borderColor: 'rgba(153, 102, 255, 1)',
                     backgroundColor: 'rgba(153, 102, 255, 0.2)'
                 },
                 {
-                    label: 'Éolien',
+                    label: 'Éolien (MW)',
                     data: data.electrical_demands.map(demand => demand.ValueWind),
                     borderColor: 'rgba(255, 159, 64, 1)',
                     backgroundColor: 'rgba(255, 159, 64, 0.2)'
                 },
                 {
-                    label: 'Solaire',
+                    label: 'Solaire (MW)',
                     data: data.electrical_demands.map(demand => demand.ValueSolar),
                     borderColor: 'rgba(255, 206, 86, 1)',
                     backgroundColor: 'rgba(255, 206, 86, 0.2)'
                 },
                 {
-                    label: 'Hydro',
+                    label: 'Hydro (MW)',
                     data: data.electrical_demands.map(demand => demand.ValueHydro),
                     borderColor: 'rgba(54, 162, 235, 1)',
                     backgroundColor: 'rgba(54, 162, 235, 0.2)'
                 },
                 {
-                    label: 'Gaz',
+                    label: 'Gaz (MW)',
                     data: data.electrical_demands.map(demand => demand.ValueGas),
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)'
                 },
                 {
-                    label: 'Pétrole',
+                    label: 'Pétrole (MW)',
                     data: data.electrical_demands.map(demand => demand.ValueOil),
                     borderColor: 'rgba(153, 102, 255, 1)',
                     backgroundColor: 'rgba(153, 102, 255, 0.2)'
                 }
             ];
 
+            // Détruire l'ancien graphique s'il existe
             if (energyChart) {
-                energyChart.destroy(); // Détruire l'ancienne instance du graphique si elle existe
+                energyChart.destroy();
             }
 
+            // Créer un nouveau graphique
             energyChart = new Chart(energyCtx, {
                 type: 'bar',
                 data: {
@@ -176,7 +187,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 options: {
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'MW'
+                            }
                         }
                     }
                 }
@@ -186,9 +201,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // Fonction pour obtenir les paramètres de seuil pour un lieu donné
     const getSettingByLocation = async (locationId) => {
         try {
-            const response = await fetch(`api/parametres/${locationId}`);
+            const response = await fetch(`/ProjetGreenIT/public/api/parametres/${locationId}`);
             if (!response.ok) {
                 console.warn('No settings found for this location.');
                 return null;
@@ -200,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // Ajouter des écouteurs d'événements pour la sélection de la localisation
     const locationElement = document.getElementById('location');
     if (locationElement) {
         locationElement.addEventListener('change', () => {
@@ -208,13 +225,14 @@ document.addEventListener('DOMContentLoaded', function() {
             updateEnergyDemandChart();
         });
 
-        // Initial call to display data on load
+        // Appel initial pour afficher les données au chargement de la page
         updateCarbonIntensityChart();
         updateEnergyDemandChart();
     } else {
         console.warn('locationElement is not defined');
     }
 
+    // Gestionnaire d'événement pour ouvrir la modale de paramétrage des alertes
     const openModalBtn = document.getElementById('openModalBtn');
     const alertModal = new Modal(document.getElementById("alertModal"));
 
@@ -224,6 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Gestionnaire pour fermer l'alerte personnalisée
     const customAlert = document.getElementById('customAlert');
     const closeAlertBtn = document.getElementById('closeAlertBtn');
 
@@ -235,38 +254,38 @@ document.addEventListener('DOMContentLoaded', function() {
         console.warn('customAlert or closeAlertBtn is not defined');
     }
 
-// Ajouter le gestionnaire de soumission du formulaire
-const alertForm = document.getElementById('alertForm');
-const saveAlertSettingsBtn = document.getElementById('saveAlertSettingsBtn');
+    // Ajouter le gestionnaire de soumission du formulaire de paramétrage des alertes
+    const alertForm = document.getElementById('alertForm');
+    const saveAlertSettingsBtn = document.getElementById('saveAlertSettingsBtn');
 
-if (alertForm && saveAlertSettingsBtn) {
-    saveAlertSettingsBtn.addEventListener('click', async (event) => {
-        event.preventDefault();
+    if (alertForm && saveAlertSettingsBtn) {
+        saveAlertSettingsBtn.addEventListener('click', async (event) => {
+            event.preventDefault();
 
-        const locationAlert = document.getElementById('locationAlert').value;
-        const carbonThreshold = document.getElementById('carbonThreshold').value;
+            const locationAlert = document.getElementById('locationAlert').value;
+            const carbonThreshold = document.getElementById('carbonThreshold').value;
 
-        try {
-            const response = await fetch(`/ProjetGreenIT/public/api/parametres/${carbonThreshold}/${locationAlert}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            try {
+                const response = await fetch(`/ProjetGreenIT/public/api/parametres/${carbonThreshold}/${locationAlert}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Settings updated successfully:', result);
+                    // Optionally close the modal here
+                    alertModal.hide();
+                } else {
+                    console.error('Failed to update settings:', response.statusText);
                 }
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                console.log('Settings updated successfully:', result);
-                // Optionally close the modal here
-                alertModal.hide();
-            } else {
-                console.error('Failed to update settings:', response.statusText);
+            } catch (error) {
+                console.error('Error updating settings:', error);
             }
-        } catch (error) {
-            console.error('Error updating settings:', error);
-        }
-    });
-}
+        });
+    }
 
 });
